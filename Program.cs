@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Apteka.Enums;
+using Apteka.IRepositories;
+using Apteka.Models;
+using Apteka.Repositories;
+using System;
 
 namespace Apteka
 {
@@ -6,10 +10,28 @@ namespace Apteka
     {
         static void Main(string[] args)
         {
-            int s = int.Parse(Console.ReadLine());
+            #region Mock Data
+            //User user = new User
+            //{
+            //    FirstName = "Ahmadjon",
+            //    LastName = "Sirojiddinov",
+            //    Login = "test",
+            //    Password = "123456",
+            //    Role = UserRole.User
+            //};
+            #endregion
 
-            int result = s + 1;
-            Console.WriteLine("Hello World!:" + result);
+            IUserRepository userRepo = new UserRepository();
+            //var result = userRepo.Create(user);
+
+            string login = Console.ReadLine();
+            string password = Console.ReadLine();
+            User result = userRepo.Login(login, password);
+
+            if(result == null)
+                Console.WriteLine("Bunday foydalanuvchi mavjud emas");
+            else
+                Console.WriteLine(result.ToString());
         }
     }
 }
