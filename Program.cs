@@ -6,7 +6,10 @@ namespace Apteka
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            int s = int.Parse(Console.ReadLine());
+
+            int result = s + 1;
+            Console.WriteLine("Hello World!:" + result);
         }
     }
 }
