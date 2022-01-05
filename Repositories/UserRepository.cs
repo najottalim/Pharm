@@ -17,41 +17,24 @@ namespace Apteka.Repositories
         public User Create(User user)
         {
             // jsonni tekst shaklda olish
-            string json = File.ReadAllText(Constants.UserJsonPath);
-            IList<User> users = JsonConvert.DeserializeObject<IList<User>>(json);
+            var users = GetAll();
             users.Add(user);
 
-            json = JsonConvert.SerializeObject(users);
+            string json = JsonConvert.SerializeObject(users);
             File.WriteAllText(Constants.UserJsonPath, json);
             
             return user;
         }
 
-        public User Login(string login, string password)
+        public IList<User> GetAll()
         {
-            string[] files = Directory.GetFiles(Constants.UserDbPath);
+            string json = File.ReadAllText(Constants.UserJsonPath);
+            return JsonConvert.DeserializeObject<IList<User>>(json);
+        }
 
-            foreach (string file in files)
-            {
-                string[] userDetails = File.ReadAllLines(file);
-                string userLogin = userDetails[4];
-                string userPassword = userDetails[5];
-
-                if (login == userLogin && password == userPassword)
-                {
-                    return new User
-                    {
-                        Id = Guid.Parse(userDetails[0]),
-                        FirstName = userDetails[1],
-                        LastName = userDetails[2],
-                        Role = (UserRole)Enum.Parse(typeof(UserRole), userDetails[3]),
-                        Login = userDetails[4],
-                        Password = userDetails[5]
-                    };
-                }
-            }
-            
-            return null;
+        public User Login(string login, string password)
+        { 
+            return GetAll().FirstOrDefault(p => p.Login == login && p.Password == password);
         }
     }
 }

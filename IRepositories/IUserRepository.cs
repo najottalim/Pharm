@@ -11,5 +11,6 @@ namespace Apteka.IRepositories
     {
         User Create(User user);
         User Login(string login, string password);
+        IList<User> GetAll();
     }
 }

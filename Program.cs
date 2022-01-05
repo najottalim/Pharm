@@ -14,26 +14,18 @@ namespace Apteka
 {
     internal class Program
     {
+        private static IUserRepository _userRepository = new UserRepository();
         static void Main(string[] args)
         {
-            string json = File.ReadAllText(Constants.UserJsonPath);
 
-            List<University> universites = JsonConvert.DeserializeObject<List<University>>(json);
-            universites.Add(new University
-            {
-                Name = ".NET Uzbekistan",
-                Country = "Uzbekistan",
-                Domains = new List<string>
-                {
-                    "dot-net.uz",
-                    "visualstudio.uz"
-                }
-            });
 
-            string result = JsonConvert.SerializeObject(universites);
-            File.WriteAllText(Constants.UserJsonPath, result);
-
-            Console.WriteLine("done");
+            //var user = _userRepository.Create(new User
+            //{
+            //    FirstName = "Ahmadjon",
+            //    LastName = "Sirojiddinov",
+            //    Login = "admin",
+            //    Password = "12345"
+            //});   
         }
     }
 }
