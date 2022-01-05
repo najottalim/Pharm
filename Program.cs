@@ -5,6 +5,7 @@ using Apteka.Repositories;
 using Apteka.Service;
 using Newtonsoft.Json;
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
