@@ -18,11 +18,22 @@ namespace Apteka
         {
             string json = File.ReadAllText(Constants.UserJsonPath);
 
-            var universites = JsonConvert.DeserializeObject<List<dynamic>>(json);
+            List<University> universites = JsonConvert.DeserializeObject<List<University>>(json);
+            universites.Add(new University
+            {
+                Name = ".NET Uzbekistan",
+                Country = "Uzbekistan",
+                Domains = new List<string>
+                {
+                    "dot-net.uz",
+                    "visualstudio.uz"
+                }
+            });
 
-            List<dynamic> names = universites.Select(x => x).ToList();
+            string result = JsonConvert.SerializeObject(universites);
+            File.WriteAllText(Constants.UserJsonPath, result);
 
-            Console.WriteLine();
+            Console.WriteLine("done");
         }
     }
 }

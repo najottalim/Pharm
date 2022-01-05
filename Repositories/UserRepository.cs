@@ -2,6 +2,7 @@
 using Apteka.IRepositories;
 using Apteka.Models;
 using Apteka.Service;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,9 +16,13 @@ namespace Apteka.Repositories
     {
         public User Create(User user)
         {
-            string fileName = MethodService.GetUserPath(user.Id);
-            string userData = user.ToString();
-            File.WriteAllText(fileName, userData);
+            // jsonni tekst shaklda olish
+            string json = File.ReadAllText(Constants.UserJsonPath);
+            IList<User> users = JsonConvert.DeserializeObject<IList<User>>(json);
+            users.Add(user);
+
+            json = JsonConvert.SerializeObject(users);
+            File.WriteAllText(Constants.UserJsonPath, json);
             
             return user;
         }
