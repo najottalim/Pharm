@@ -2,7 +2,13 @@
 using Apteka.IRepositories;
 using Apteka.Models;
 using Apteka.Repositories;
+using Apteka.Service;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using static System.Console;
 
 namespace Apteka
 {
@@ -10,28 +16,13 @@ namespace Apteka
     {
         static void Main(string[] args)
         {
-            #region Mock Data
-            //User user = new User
-            //{
-            //    FirstName = "Ahmadjon",
-            //    LastName = "Sirojiddinov",
-            //    Login = "test",
-            //    Password = "123456",
-            //    Role = UserRole.User
-            //};
-            #endregion
+            string json = File.ReadAllText(Constants.UserJsonPath);
 
-            IUserRepository userRepo = new UserRepository();
-            //var result = userRepo.Create(user);
+            var universites = JsonConvert.DeserializeObject<List<dynamic>>(json);
 
-            string login = Console.ReadLine();
-            string password = Console.ReadLine();
-            User result = userRepo.Login(login, password);
+            List<dynamic> names = universites.Select(x => x).ToList();
 
-            if(result == null)
-                Console.WriteLine("Bunday foydalanuvchi mavjud emas");
-            else
-                Console.WriteLine(result.ToString());
+            Console.WriteLine();
         }
     }
 }

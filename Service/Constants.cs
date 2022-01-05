@@ -10,5 +10,6 @@ namespace Apteka.Service
     {
         public static readonly string UserDbPath = @"..\..\..\Database\Users";
         public static readonly string UserDataDbPath = "";
+        public static readonly string UserJsonPath = @"..\..\..\Database\Users.json";
     }
 }
